@@ -1,0 +1,20 @@
+stages:
+- stage: 'Provision'
+  displayName: 'Provision the environment'
+  jobs:
+  - job: 'Provision'
+    displayName: 'Provision App Service'
+    pool:
+      vmImage: 'Ubuntu-16.04'
+
+    variables:
+    - group: 'tailspin_credentials'
+
+    steps:
+      - task: AzureCLI@1
+        displayName: Run Terraform
+        azureSubscription: TF
+        scriptLocation: inlineScript
+        inlineScript: |
+          terrafrom init
+          terraform apply -auto-approve
