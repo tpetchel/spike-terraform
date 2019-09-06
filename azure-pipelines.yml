@@ -14,5 +14,5 @@ stages:
           azureSubscription: TF
           scriptLocation: inlineScript
           inlineScript: |
-            terrafrom init
+            terraform init
             terraform apply -auto-approve
