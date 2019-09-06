@@ -7,14 +7,12 @@ stages:
     pool:
       vmImage: 'Ubuntu-16.04'
 
-    variables:
-    - group: 'tailspin_credentials'
-
     steps:
       - task: AzureCLI@1
-        displayName: Run Terraform
-        azureSubscription: TF
-        scriptLocation: inlineScript
-        inlineScript: |
-          terrafrom init
-          terraform apply -auto-approve
+        inputs:
+          displayName: Run Terraform
+          azureSubscription: TF
+          scriptLocation: inlineScript
+          inlineScript: |
+            terrafrom init
+            terraform apply -auto-approve
