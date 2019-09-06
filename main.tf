@@ -13,6 +13,15 @@ variable "app_service_plan_name" {
   description = "The name of the app service plan to create"
 }
 
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "spike-tf-storage-rg"
+    storage_account_name = "spiketfsa"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
+}
+
 resource "azurerm_resource_group" "tailspin" {
   name     = "${var.resource_group}"
   location = "${var.resource_group_location}"

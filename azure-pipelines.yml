@@ -3,16 +3,17 @@ stages:
   displayName: 'Provision the environment'
   jobs:
   - job: 'Provision'
-    displayName: 'Provision App Service'
+    displayName: 'Provision Azure App Service'
     pool:
       vmImage: 'Ubuntu-16.04'
-
+    variables:
+    - group: 'Azure Credentials'
     steps:
-      - task: AzureCLI@1
-        inputs:
-          displayName: Run Terraform
-          azureSubscription: TF
-          scriptLocation: inlineScript
-          inlineScript: |
-            terraform init
-            terraform apply -auto-approve
+      - script: |
+          export ARM\_CLIENT\_ID="$(arm_client_id)"
+          export ARM\_CLIENT\_SECRET="$(arm_client_secret)"
+          export ARM\_TENANT\_ID="$(arm_tenant_id)"
+          export ARM\_SUBSCRIPTION\_ID="$(arm_subscription_id)"
+          terraform init
+          terraform apply -auto-approve
+        displayName: 'Run Terraform'
